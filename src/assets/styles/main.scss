@@ -1,0 +1,48 @@
+.marks-app {
+  .add-team{
+    .form-open-button{
+      font-size: 0.7em;
+      float:right;
+    }
+    .create-team-button{
+
+        background-color: blue;
+        font-size: 0.7em;
+        float:right;
+
+    }
+  }
+  .team {
+    background-color: #DCDCDC;
+    border-style: solid;
+    border-color: white;
+    border-radius: 10px;
+  }
+
+  .delete-button {
+    text-align: right;
+    cursor: pointer;
+
+  }
+  .sub-button{
+    background-color: #FF7700;
+    font-size: 0.7em;
+  }
+  .add-button{
+    float: right;
+    font-size: 0.7em;
+  }
+
+  .switches{
+    padding: 10px 20px;
+    background-color: #DCDCDC;
+    border-style: solid;
+    border-color: white;
+    border-radius: 10px;
+    .sort-switch {
+      .custom-switch {
+        float: right;
+      }
+    }
+  }
+}
