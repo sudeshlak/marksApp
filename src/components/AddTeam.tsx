@@ -1,13 +1,14 @@
 import React, {useState} from 'react';
 import {Button, Col, Row, Form} from "react-bootstrap";
 
-type createAuthorProps = {
+type addTeamProps = {
     onTeamAdd: (name: string) => void
+    isDark:boolean
 }
-const AddTeam: React.FC <createAuthorProps>= (props) => {
-    const {onTeamAdd} = props;
+const AddTeam: React.FC<addTeamProps> = (props) => {
+    const {onTeamAdd,isDark} = props;
     const [isFormVisible, setIsFormVisibility] = useState<boolean>(false);
-    const [newTeamName, setNewTeamName] = useState<string | undefined>(undefined);
+    const [newTeamName, setNewTeamName] = useState<string | null>(null);
 
     const handleOnFormOpen = () => {
         setIsFormVisibility(!isFormVisible);
@@ -18,14 +19,14 @@ const AddTeam: React.FC <createAuthorProps>= (props) => {
             return;
         }
         onTeamAdd(newTeamName);
-        setNewTeamName('');
+        setNewTeamName(null);
     }
     const handleOnTeamNameChanged = (name: string) => {
         setNewTeamName(name);
     }
 
     return (
-        <Col xs={6} md={3} className='add-team'>
+        <Col xs={6} md={3} className={isDark? 'add-team-dark py-2':'add-team-white py-2'}>
             <Row>
                 <Col xs={8}>Add New Team</Col>
                 <Col xs={4}><Button className='form-open-button'
@@ -38,7 +39,7 @@ const AddTeam: React.FC <createAuthorProps>= (props) => {
                 <Form className='form-inputs' onSubmit={handleOnSubmit}>
                     <Form.Group controlId="authorName">
                         <Form.Control type="text" placeholder="Enter the team name..."
-                                      value={newTeamName}
+                                      value={newTeamName ? newTeamName : ''}
                                       required
                                       onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                                           handleOnTeamNameChanged(event.target.value)}
