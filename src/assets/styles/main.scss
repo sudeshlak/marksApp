@@ -1,28 +1,69 @@
-.marks-app {
-  .add-team{
-    .form-open-button{
-      font-size: 0.7em;
-      float:right;
-    }
-    .create-team-button{
+@mixin team{
+  border-style: solid;
+  border-color: white;
+  border-radius: 10px;
 
-        background-color: blue;
-        font-size: 0.7em;
-        float:right;
-
+}
+@mixin switches{
+  padding: 10px 20px;
+  border-style: solid;
+  border-color: white;
+  border-radius: 10px;
+  .sort-switch {
+    .custom-switch {
+      float: right;
     }
   }
-  .team {
+}
+@mixin  add-team{
+
+  border-radius: 10px;
+  background-color: black;
+  border-style: solid;
+  border-color: white;
+  .form-open-button{
+    font-size: 0.7em;
+    float:right;
+  }
+  .create-team-button{
+
+    background-color: blue;
+    font-size: 0.7em;
+    float:right;
+
+  }
+
+}
+.marks-app {
+  .add-team-dark{
+    @include add-team;
+    background-color: black;
+    color:white;
+
+  }
+  .add-team-white{
+    @include add-team;
     background-color: #DCDCDC;
-    border-style: solid;
-    border-color: white;
-    border-radius: 10px;
+
+  }
+
+  .team-white {
+    @include team;
+    background-color: #DCDCDC;
+  }
+  .team-dark {
+    @include team;
+    background-color: black;
+    color:white;
   }
 
   .delete-button {
     text-align: right;
     cursor: pointer;
 
+  }
+  .history-button{
+    cursor: pointer;
   }
   .sub-button{
     background-color: #FF7700;
@@ -33,16 +74,15 @@
     font-size: 0.7em;
   }
 
-  .switches{
-    padding: 10px 20px;
+  .switches-white{
+    @include switches;
     background-color: #DCDCDC;
-    border-style: solid;
-    border-color: white;
-    border-radius: 10px;
-    .sort-switch {
-      .custom-switch {
-        float: right;
-      }
-    }
+
   }
+  .switches-dark{
+    @include switches;
+    background-color: black;
+    color:white;
+  }
+
 }
