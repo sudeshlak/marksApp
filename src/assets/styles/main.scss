@@ -1,0 +1,89 @@
+@mixin team {
+  border-style: solid;
+  border-color: white;
+  border-radius: 10px;
+}
+
+@mixin switches {
+  max-height: 55px;
+  padding: 10px 20px;
+  border-style: solid;
+  border-color: white;
+  border-radius: 10px;
+  .sort-switch {
+    float: right;
+  }
+}
+
+@mixin add-team {
+  border-radius: 10px;
+  background-color: black;
+  border-style: solid;
+  border-color: white;
+
+  .form-open-button {
+    font-size: 0.7em;
+    float: right;
+  }
+  .create-team-button {
+    background-color: blue;
+    font-size: 0.7em;
+    float: right;
+  }
+}
+
+.marks-app {
+  .add-team-dark {
+    @include add-team;
+    background-color: black;
+    color: white;
+  }
+
+  .add-team-white {
+    @include add-team;
+    background-color: #DCDCDC;
+  }
+
+  .team-white {
+    @include team;
+    background-color: #DCDCDC;
+  }
+
+  .team-dark {
+    @include team;
+    background-color: black;
+    color: white;
+  }
+
+  .delete-button {
+    text-align: right;
+    cursor: pointer;
+
+  }
+
+  .history-button {
+    cursor: pointer;
+  }
+
+  .sub-button {
+    background-color: #FF7700;
+    font-size: 0.7em;
+  }
+
+  .add-button {
+    float: right;
+    font-size: 0.7em;
+  }
+
+  .switches-white {
+    @include switches;
+    background-color: #DCDCDC;
+
+  }
+
+  .switches-dark {
+    @include switches;
+    background-color: black;
+    color: white;
+  }
+}
