@@ -28,7 +28,7 @@ const Theme: React.FC<themeProps> = (props) => {
             <Col>
               <Form className='sort-switch'>
                 <Form.Check
-                    label="sort"
+                    label="Sort"
                     checked={isSort}
                     id="custom-switch2"
                     onChange={(event) => onSort(event.target.checked)}
