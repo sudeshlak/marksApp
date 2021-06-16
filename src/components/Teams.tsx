@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Row} from "react-bootstrap";
 import Team from "./Team";
 import {ITeam} from "../types/MarksTypes";
@@ -9,6 +9,7 @@ type teamProps = {
   teams: ITeam[]
   setTeams: (team: ITeam[]) => void
   isSort: boolean
+
 }
 
 const Teams: React.FC<teamProps> = (props) => {
@@ -19,21 +20,26 @@ const Teams: React.FC<teamProps> = (props) => {
   }
 
   const handleOnViewHistory = async (id: number) => {
-    const teamToUpdateMarks: ITeam = await fetchTeam(id);
-    const marks: { date: string, mark: number }[] = teamToUpdateMarks.marks;
+    const teamToViewHistoryMarks: ITeam = await fetchTeam(id);
+    const marks: { date: string, mark: number, bitCoin: number }[] = teamToViewHistoryMarks.marks;
 
     let list: string = '';
     marks.forEach(element => {
-          list += element.date + ' :   ' + element.mark + '\n\n'
+          list += element.date + ' :   $' + element.mark + ' + \u20bf' + element.bitCoin + '\n\n'
         }
     );
     alert(list);
   }
 
-  const handleOnAddMarks = async (id: number, addMarks: number) => {
+  const handleOnAddMarks = async (id: number, addMarks: number, isBitCoin: boolean) => {
     const teamToUpdateMarks: ITeam = await fetchTeam(id);
-    const marks: { date: string, mark: number }[] = teamToUpdateMarks.marks;
-    marks.splice(0, 0, {date: getDate(), mark: marks[0].mark + addMarks});
+    const marks: { date: string, mark: number, bitCoin: number }[] = teamToUpdateMarks.marks;
+    if (isBitCoin) {
+      marks.splice(0, 0, {date: getDate(), bitCoin: marks[0].bitCoin + addMarks, mark: marks[0].mark});
+    } else {
+      marks.splice(0, 0, {date: getDate(), mark: marks[0].mark + addMarks, bitCoin: marks[0].bitCoin});
+    }
+
     const updateMarksTeam: ITeam = {...teamToUpdateMarks, marks: marks};
 
     const res: any = await fetch(`http://localhost:5000/teams/${id}`, {
@@ -47,8 +53,13 @@ const Teams: React.FC<teamProps> = (props) => {
     setTeams(
         allTeams.map((team) => {
               if (team.id === id) {
-                const mark: any = {date: getDate(), mark: team.marks[0].mark + addMarks};
-                team.marks.splice(0, 0, mark);
+                if (isBitCoin) {
+                  const mark: any = {date: getDate(), bitCoin: team.marks[0].bitCoin + addMarks, mark: team.marks[0].mark};
+                  team.marks.splice(0, 0, mark);
+                } else {
+                  const mark: any = {date: getDate(), mark: team.marks[0].mark + addMarks, bitCoin: team.marks[0].bitCoin};
+                  team.marks.splice(0, 0, mark);
+                }
                 return {...team, marks: team.marks};
               } else {
                 return team;
@@ -58,10 +69,14 @@ const Teams: React.FC<teamProps> = (props) => {
     );
   }
 
-  const handleOnSubMarks = async (id: number, subMarks: number) => {
+  const handleOnSubMarks = async (id: number, subMarks: number, isBitCoin: boolean) => {
     const teamToUpdateMarks: ITeam = await fetchTeam(id);
-    const marks: { date: string, mark: number }[] = teamToUpdateMarks.marks;
-    marks.splice(0, 0, {date: getDate(), mark: marks[0].mark - subMarks});
+    const marks: { date: string, mark: number, bitCoin: number }[] = teamToUpdateMarks.marks;
+    if (isBitCoin) {
+      marks.splice(0, 0, {date: getDate(), bitCoin: marks[0].bitCoin - subMarks, mark: marks[0].mark});
+    } else {
+      marks.splice(0, 0, {date: getDate(), mark: marks[0].mark - subMarks, bitCoin: marks[0].bitCoin});
+    }
     const updateMarksTeam: ITeam = {...teamToUpdateMarks, marks: marks};
 
     const res: any = await fetch(`http://localhost:5000/teams/${id}`, {
@@ -75,8 +90,16 @@ const Teams: React.FC<teamProps> = (props) => {
     setTeams(
         allTeams.map((team) => {
               if (team.id === id) {
-                const mark: any = {date: getDate(), mark: team.marks[0].mark - subMarks};
-                team.marks.splice(0, 0, mark);
+                if (isBitCoin) {
+                  const mark: any = {date: getDate(), bitCoin: team.marks[0].bitCoin - subMarks, mark: team.marks[0].mark};
+                  team.marks.splice(0, 0, mark);
+
+                } else {
+                  const mark: any = {date: getDate(), mark: team.marks[0].mark - subMarks, bitCoin: team.marks[0].bitCoin};
+                  team.marks.splice(0, 0, mark);
+                }
+
+
                 return {...team, marks: team.marks};
               } else {
                 return team;
@@ -110,6 +133,8 @@ const Teams: React.FC<teamProps> = (props) => {
                        onDelete={handleOnDelete}
                        onViewHistory={handleOnViewHistory}
                        isDark={isDark}
+
+
           />
         }
     );

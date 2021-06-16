@@ -6,22 +6,22 @@ import {ITeam} from "../types/MarksTypes";
 
 type teamProps = {
   team: ITeam
-  onAddMarks: (id: number, addMarks: number) => void
-  onSubMarks: (id: number, addMarks: number) => void
+  onAddMarks: (id: number, addMarks: number, isBitCoin: boolean) => void
+  onSubMarks: (id: number, addMarks: number, isBitCoin: boolean) => void
   onDelete: (id: number) => void
   onViewHistory: (id: number) => void
   isDark: boolean
 }
 
 const Team: React.FC<teamProps> = (props) => {
+  const [isBitCoin, setIsBitCoin] = useState<boolean>(false);
   const {team, onAddMarks, onSubMarks, onDelete, onViewHistory, isDark} = props;
   const [marks, setMarks] = useState<number | undefined>(undefined);
-
   const handleOnSub = () => {
     if (!marks) {
       return;
     }
-    onSubMarks(team.id, marks);
+    onSubMarks(team.id, marks, isBitCoin);
     setMarks(undefined);
   }
 
@@ -30,7 +30,7 @@ const Team: React.FC<teamProps> = (props) => {
     if (!marks) {
       return;
     }
-    onAddMarks(team.id, marks);
+    onAddMarks(team.id, marks, isBitCoin);
     setMarks(undefined);
   }
 
@@ -46,13 +46,24 @@ const Team: React.FC<teamProps> = (props) => {
           </Col>
         </Row>
         <Row className='team-marks my-2'>
-          <Col>Marks: {team.marks[0].mark}</Col>
+          <Col>Marks: ${team.marks[0].mark} + {"\u20bf"} {team.marks[0].bitCoin}</Col>
         </Row>
+        <Row><Col>
+          <Form>
+            <Form.Check
+                label={isBitCoin ? "Bitcoin" : "Dollars"}
+                checked={isBitCoin}
+                id={"swith"+team.name}
+                onChange={(event) => setIsBitCoin(event.target.checked)}
+            />
+          </Form>
+        </Col></Row>
         <Row>
           <Form className='my-2' onSubmit={handleOnAdd}>
             <Form.Group controlId="marks">
               <NumberFormat thousandSeparator={true}
                             className='form-control'
+                            prefix={isBitCoin ? "\u20bf :" : "$ :"}
                             required
                             value={marks ? marks : ''}
                             placeholder=""

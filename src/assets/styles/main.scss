@@ -1,25 +1,38 @@
-@mixin team {
+
+$back-ground-color-dark-theme:rgba(61, 61, 61, 0.73);
+@mixin team($bgColor,$fontColor,$borderColor) {
   border-style: solid;
-  border-color: white;
+  background-color: $bgColor;
+  color: $fontColor;
+  border-color: $borderColor;
   border-radius: 10px;
 }
+@mixin body($bgColor){
+  body{
+    background-color:$bgColor ;
+  }
 
-@mixin switches {
+}
+
+@mixin switches($bgColor,$fontColor,$borderColor) {
   max-height: 55px;
   padding: 10px 20px;
   border-style: solid;
-  border-color: white;
   border-radius: 10px;
+  background-color: $bgColor;
+  color: $fontColor;
+  border-color: $borderColor;
   .sort-switch {
     float: right;
   }
 }
 
-@mixin add-team {
+@mixin add-team($bgColor,$fontColor,$borderColor) {
   border-radius: 10px;
-  background-color: black;
   border-style: solid;
-  border-color: white;
+  background-color: $bgColor;
+  color: $fontColor;
+  border-color: $borderColor;
 
   .form-open-button {
     font-size: 0.7em;
@@ -32,27 +45,29 @@
   }
 }
 
-.marks-app {
+@mixin dark-theme {
+  background-color: #2b2b2b;
+  color: white;
+  border-color: #000000;
+}
+
+@mixin marks-app($fontColor) {
+  color: $fontColor;
   .add-team-dark {
-    @include add-team;
-    background-color: black;
-    color: white;
+    @include add-team($back-ground-color-dark-theme, #ffffff, #000000)
   }
 
   .add-team-white {
-    @include add-team;
-    background-color: #DCDCDC;
+    @include add-team(#DCDCDC, #000000, #ffffff)
   }
 
   .team-white {
-    @include team;
-    background-color: #DCDCDC;
+    @include team(#DCDCDC, #000000, #ffffff)
   }
 
   .team-dark {
-    @include team;
-    background-color: black;
-    color: white;
+    @include team($back-ground-color-dark-theme, #ffffff, #000000)
+
   }
 
   .delete-button {
@@ -76,14 +91,19 @@
   }
 
   .switches-white {
-    @include switches;
-    background-color: #DCDCDC;
-
+    @include switches(#DCDCDC, #000000, #ffffff)
   }
 
   .switches-dark {
-    @include switches;
-    background-color: black;
-    color: white;
+    @include switches($back-ground-color-dark-theme, #ffffff, #000000)
   }
+}
+
+.mark-app-white {
+  @include marks-app(#000000)
+
+}
+
+.mark-app-dark {
+  @include marks-app(#ffffff)
 }

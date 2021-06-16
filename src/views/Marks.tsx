@@ -11,6 +11,7 @@ const Marks: React.FC = () => {
   const [isDark, setIsDark] = useState<boolean>(false);
   const [isSort, setIsSort] = useState<boolean>(false);
 
+
   useEffect(() => {
     const getTeams = async () => {
       const teamsFromServer: ITeam[] = await fetchTeams();
@@ -78,7 +79,7 @@ const Marks: React.FC = () => {
       id = generateId();
     }
 
-    const newTeam: ITeam = {id: id, name: name, marks: [{date: getDate(), mark: 0}]};
+    const newTeam: ITeam = {id: id, name: name, marks: [{date: getDate(), mark: 0,bitCoin:0}]};
     const res: any = await fetch('http://localhost:5000/teams', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -91,7 +92,8 @@ const Marks: React.FC = () => {
   }
 
   return (
-      <Container className='marks-app'>
+      <div  style={{backgroundColor: isDark ? 'black' : 'white',minHeight:'100vh'}}>
+      <Container className={isDark ? 'mark-app-dark' : 'mark-app-white'}>
         <Row className='title text-center py-2'>
           <h1>MARKS</h1>
         </Row>
@@ -111,7 +113,11 @@ const Marks: React.FC = () => {
                teams={teams}
                setTeams={setTeams}
                isSort={isSort}
+
         />
-      </Container>);
+      </Container>
+      </div>
+        );
+
 }
 export default Marks;
