@@ -1,5 +1,5 @@
+$back-ground-color-dark-theme: rgb(47, 47, 47);
 
-$back-ground-color-dark-theme:rgba(61, 61, 61, 0.73);
 @mixin team($bgColor,$fontColor,$borderColor) {
   border-style: solid;
   background-color: $bgColor;
@@ -7,11 +7,11 @@ $back-ground-color-dark-theme:rgba(61, 61, 61, 0.73);
   border-color: $borderColor;
   border-radius: 10px;
 }
-@mixin body($bgColor){
-  body{
-    background-color:$bgColor ;
-  }
 
+@mixin body($bgColor) {
+  body {
+    background-color: $bgColor;
+  }
 }
 
 @mixin switches($bgColor,$fontColor,$borderColor) {
@@ -101,9 +101,28 @@ $back-ground-color-dark-theme:rgba(61, 61, 61, 0.73);
 
 .mark-app-white {
   @include marks-app(#000000)
-
 }
 
 .mark-app-dark {
   @include marks-app(#ffffff)
+}
+
+@media only screen and (max-width: 768px) {
+  .mark-app-dark, .mark-app-white {
+    font-size: 0.9em;
+
+    ::-webkit-input-placeholder {
+      font-size: 0.9em;
+    }
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  .mark-app-dark, .mark-app-white {
+    font-size: 0.8em;
+
+    ::-webkit-input-placeholder {
+      font-size: 0.8em;
+    }
+  }
 }

@@ -9,7 +9,6 @@ type teamProps = {
   teams: ITeam[]
   setTeams: (team: ITeam[]) => void
   isSort: boolean
-
 }
 
 const Teams: React.FC<teamProps> = (props) => {
@@ -48,8 +47,8 @@ const Teams: React.FC<teamProps> = (props) => {
       body: JSON.stringify(updateMarksTeam),
     });
     const data: any = await res.json();
-
     const allTeams: ITeam[] = teams.slice();
+
     setTeams(
         allTeams.map((team) => {
               if (team.id === id) {
@@ -115,11 +114,6 @@ const Teams: React.FC<teamProps> = (props) => {
 
       await fetch(`http://localhost:5000/teams/${id}`, {method: 'DELETE'})
       const allTeams: ITeam[] = teams.slice();
-      setTeams(
-          allTeams.filter((team) =>
-              team.id !== id
-          )
-      );
     }
   }
 
